@@ -104,7 +104,7 @@ window.addEventListener('scroll', function(e) {
     imageStep1.classList.add('active')
     blockStep1.classList.add('active')
    }
-   if(pageYOffset > 3300) {
+   if(pageYOffset > 3100) {
     imageStep3.classList.add('active')
     blockStep3.classList.add('active')
    }
