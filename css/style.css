@@ -1319,7 +1319,15 @@ input, button, textarea{
         font-size: 17px;
         line-height: 20px;
     }
+    
+    .step3-block{
+        transform: translateX(0);
+    }
 
+    .step3__image_wrap{
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 
@@ -1405,15 +1413,6 @@ input, button, textarea{
 
     .step1-block{
         transform: translateX(0);
-        visibility: visible;
-    }
-
-    .step3-block{
-        transform: translateX(0);
-    }
-
-    .step3__image_wrap{
-        opacity: 1;
         visibility: visible;
     }
 }
