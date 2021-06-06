@@ -25,17 +25,17 @@ $(document).ready(function () {
         autoplay: true,
         responsive: [
             {
-              breakpoint: 1330,
-              settings: {
-                slidesToShow: 3,
-              }
+                breakpoint: 1330,
+                settings: {
+                    slidesToShow: 3,
+                }
             },
             {
                 breakpoint: 770,
                 settings: {
-                  slidesToShow: 2,
+                    slidesToShow: 2,
                 }
-              }
+            }
         ]
     })
 })
@@ -49,33 +49,29 @@ let menu = document.querySelector('.menu_wrap')
 let background = document.querySelector('.background--black')
 let closeMenuBtn = document.querySelector('.button--close')
 
-menuOpenBtn.addEventListener('click', function() {
+menuOpenBtn.addEventListener('click', function () {
     background.classList.toggle('active')
     menu.classList.toggle('active')
 })
 
-background.addEventListener('click', function() {
+background.addEventListener('click', function () {
     background.classList.toggle('active')
     menu.classList.toggle('active')
 })
 
-closeMenuBtn.addEventListener('click', function() {
+closeMenuBtn.addEventListener('click', function () {
     background.classList.toggle('active')
     menu.classList.toggle('active')
 })
 
 const arrayLink = document.querySelectorAll('.menu-item__link')
-if(arrayLink.length > 0){
+if (arrayLink.length > 0) {
     arrayLink.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             background.classList.toggle('active')
             menu.classList.toggle('active')
-            setTimeout(function() {
-                imageStep1.classList.add('active')
-                blockStep1.classList.add('active')
-            }, 700)
             const menuLink = e.target
-            if(menuLink.dataset.goto && document.querySelector(menuLink.dataset.goto)){
+            if (menuLink.dataset.goto && document.querySelector(menuLink.dataset.goto)) {
                 const block = document.querySelector(menuLink.dataset.goto)
                 const gotoBlockValue = block.getBoundingClientRect().top + pageYOffset
                 window.scrollTo({
@@ -84,13 +80,9 @@ if(arrayLink.length > 0){
                 })
                 e.preventDefault()
             }
-        }) 
+        })
     })
 }
-
-body.addEventListener('click', function() {
-    console.log(pageYOffset)
-})
 
 let complex = document.querySelector('.complex')
 let step3 = document.querySelector('.step3')
@@ -99,37 +91,68 @@ let blockStep1 = document.querySelector('.step1-block')
 let blockStep3 = document.querySelector('.step3-block')
 let imageStep3 = document.querySelector('.step3__image_wrap');
 
-window.addEventListener('scroll', function(e) {
-   if(pageYOffset > 1800) {
-    imageStep1.classList.add('active')
-    blockStep1.classList.add('active')
-   }
-   if(pageYOffset > 2900) {
-    imageStep3.classList.add('active')
-    blockStep3.classList.add('active')
-   }
-
+servicesList.addEventListener('wheel', function (e) {
+    if (servicesList.scrollLeft < 430) {
+        e.preventDefault()
+        servicesList.scrollLeft += e.deltaY;
+        let progressWidth = servicesList.scrollLeft / 4
+        console.log(progressWidth)
+        progressBar.style.width = progressWidth + '%'
+    }
 })
 
-servicesList.addEventListener('wheel', function(e) {
-        if(servicesList.scrollLeft < 430) {
-            e.preventDefault()
-            servicesList.scrollLeft += e.deltaY;
-            let progressWidth = servicesList.scrollLeft / 4
-            console.log(progressWidth)
-            progressBar.style.width = progressWidth + '%'
+const animItems = document.querySelectorAll('._anim-items')
+if (animItems.length > 0) {
+    window.addEventListener('scroll', elemHide)
+    function elemHide() {
+        for (let ind = 0; ind < animItems.length; ind++) {
+            const animItem = animItems[ind];
+            const animItemHeight = animItem.offsetHeight  // получаем высоту элемента
+            const animItemOffset = offset(animItem).top   // получаем положение элемента относительно всей высоты сайта
+            const animStart = 4  // коэфициент 1/4 от размера элемента
+            let animItemPoint = window.innerHeight - animItemHeight / animStart  // точка при которой элемент выходит на 1/4 снизу экрана
+            if (animItemHeight > window.innerHeight) {
+                animItemPoint = window.innerHeight - window.innerHeight / animStart  // если высота элемента больше высоты окна браузера
+            }
+            if ((pageYOffset > animItemOffset - animItemPoint) && pageYOffset < (animItemOffset + animItemHeight)) { 
+                // когда проскролленное расстояние больше чем точка верхней границы элемента минус 
+                // расстояние от верха окна браузера до точки когда 1/4 элемента появляется над экраном
+                // и  проскролленное расстояние меньше чем точка верхней границы элемента плюс высота элемента
+                if(animItem.classList.contains('header-box__item')) {
+                    let headerElments = document.querySelectorAll('.header-box__item')
+                    headerElments.forEach((elem, ind) => {
+                        if(ind == 0) {
+                            elem.classList.add('_active')
+                        }
+                        if(ind == 1) {
+                            setTimeout(function() {
+                                elem.classList.add('_active')
+                            },400)
+                        }
+                        if(ind == 2) {
+                            setTimeout(function() {
+                                elem.classList.add('_active')
+                            },800)
+                        }
+                    }) 
+                } else{
+                    animItem.classList.add('_active')
+                }
+            } else {
+                if (!animItem.classList.contains('_stop')) {
+                    animItem.classList.remove('_active')
+                }
+            }
         }
-})
-
-
-// (function(){
-//     $.jInvertScroll(['.services-item'],{
-//         height: 40,
-//         onScroll: function(percent) {
-//             console.log(percent)
-//         }
-//     });
-// })(jQuery);
-
-//   horwheel(servicesList);
-
+    }
+    function offset(el) {
+        const rect = el.getBoundingClientRect()
+        scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+        scrollTop = window.pageYOffset || document.documentElement.scrollTop
+        return {
+            top: rect.top + scrollTop,
+            left: rect.left + scrollLeft
+        }
+    }
+    setTimeout(elemHide(), 500)
+}

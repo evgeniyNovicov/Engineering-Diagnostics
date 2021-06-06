@@ -30,6 +30,7 @@ input, button, textarea{
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    overflow: hidden;
     /* height: 100vh; */
     color: #ffff;
     position: relative;
@@ -325,13 +326,32 @@ input, button, textarea{
     line-height: 51px;
     letter-spacing: -0.5px;
     margin: -20px  0 38px;
+    transform: translate(-140%, 0);
+    opacity: 0;
+    transition: all 1s;
+    visibility: hidden;
+}
+
+.box--left__title._active{
+    visibility: visible;
+    transform: translate(0, 0);
+    opacity: 1;
 }
 
 .box--left__text{
     font-size: 20px;
     line-height: 34px;
-    opacity: 0.7;
     width: 64%;
+    transform: translate(-140%, 0);
+    opacity: 0;
+    transition: all 1s ease 0.5s;
+    visibility: hidden;
+}
+
+.box--left__text._active{
+    visibility: visible;
+    transform: translate(0, 0);
+    opacity: 0.7;
 }
 
 .header-content__box--right{
@@ -357,11 +377,21 @@ input, button, textarea{
     cursor: pointer;
     border-radius: 2px;
     margin-bottom: 40px;
-    transition: .4s all;
+    transform: translateX(120%);
+    visibility: visible;
+    opacity: 0;
+}
+
+.box--right__button._active{
+    transform: translateX(0);
+    visibility: visible;
+    transition: all 1s;
+    opacity: 1;
 }
 
 .box--right__button:hover{
     box-shadow: -4px -2px 65px -1px #FEE040;
+    transition: .4s all;
 }
 
 .box--right__button::before{
@@ -382,6 +412,16 @@ input, button, textarea{
     font-size: 15px;
     line-height: 28px;
     font-weight: 100;
+    transform: translateX(120%);
+    visibility: visible;
+    opacity: 0;
+}
+
+.box--right__text._active{
+    transform: translateX(0);
+    visibility: visible;
+    transition: all 1s ease 0.5s;
+    opacity: 1;
 }
 
 .header-content__line--left{
@@ -418,7 +458,18 @@ input, button, textarea{
     margin-right: 100px;
     display: flex;
     align-items: center;
+    transform: translate(0, 120%);
+    opacity: 0;
+    visibility: hidden;
+    transition: 1s all;
 }
+
+.header-box__item._active{
+    transform: translate(0, 0);
+    opacity: 1;
+    visibility: visible;
+}
+
 
 .box-item__image{
     width: 50px;
@@ -502,6 +553,13 @@ input, button, textarea{
     transition: .4s all;
 }
 
+.features{
+    z-index: 30000;
+    background-color: #ffff;
+    position: relative;
+    overflow: hidden;
+}
+
 .features-content{
     display: flex;
     justify-content: space-between;
@@ -535,6 +593,16 @@ input, button, textarea{
     margin-top: 56px;
     width: 380px;
     height: 374px;
+    transform: scale(0) rotate(-480deg);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 1s;
+}
+
+.features__image._active{
+    transform: scale(1) rotate(0);
+    opacity: 1;
+    visibility: visible;
 }
 
 .features__block--right{
@@ -753,6 +821,9 @@ input, button, textarea{
     flex-direction: column;
     align-items: center;
     padding: 104px 0 100px 0;
+    background-color: #ffff;
+    position: relative;
+    z-index: 3000
 }
 
 .complex__title{
@@ -784,6 +855,8 @@ input, button, textarea{
     display: flex;
     overflow: hidden;
     min-width: 0;
+    position: relative;
+    z-index: 20000;
 }
 
 .slider-image_wrap{
@@ -851,6 +924,12 @@ input, button, textarea{
 .step1__image_inner{
     width: 100%;
     height: 100%;
+}
+
+.step2{
+    background-color: #ffff;
+    position: relative;
+    z-index: 30000;
 }
 
 
@@ -1134,6 +1213,8 @@ input, button, textarea{
 .step3{
     display: flex;
     overflow: hidden;
+    position: relative;
+    z-index: 20000;
 }
 
 .step3-block{
@@ -1152,7 +1233,7 @@ input, button, textarea{
 
 .step3__image_wrap{
     width: 50%;
-    opacity: 0;
+    opacity: 0; 
     visibility: hidden;
     transition: 1.3s all;
 }
@@ -1164,7 +1245,6 @@ input, button, textarea{
 
 .step3-block_inner{
     width: 82%;
-
 }
 
 .step3-box__text{
@@ -1211,6 +1291,45 @@ input, button, textarea{
     width: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+.element-hide--left{
+    transform: translate(-120%, 0);
+    visibility: hidden;
+    opacity: 0;
+    transition: .8s all;
+}
+
+.element-hide--right{
+    transform: translate(120%, 0);
+    visibility: hidden;
+    opacity: 0;
+    transition: 1s all;
+}
+
+.element-hide--center{
+    transform: translate(0, 140%);
+    visibility: hidden;
+    opacity: 0;
+    transition: .8s all;
+    overflow-y: hidden;
+}
+
+.element-hide--left._active{
+    transform: translate(0, 0);
+    visibility: visible;
+    opacity: 1;
+}
+
+.element-hide--right._active{
+    transform: translate(0, 0);
+    visibility: visible;
+    opacity: 1;
+}
+.element-hide--center._active{
+    transform: translate(0, 0);
+    visibility: visible;
+    opacity: 1;
 }
 
 @media (max-width: 1500px) {
@@ -1319,15 +1438,7 @@ input, button, textarea{
         font-size: 17px;
         line-height: 20px;
     }
-    
-    .step3-block{
-        transform: translateX(0);
-    }
 
-    .step3__image_wrap{
-        opacity: 1;
-        visibility: visible;
-    }
 }
 
 
@@ -1413,6 +1524,15 @@ input, button, textarea{
 
     .step1-block{
         transform: translateX(0);
+        visibility: visible;
+    }
+
+    .step3-block{
+        transform: translateX(0);
+    }
+
+    .step3__image_wrap{
+        opacity: 1;
         visibility: visible;
     }
 }
